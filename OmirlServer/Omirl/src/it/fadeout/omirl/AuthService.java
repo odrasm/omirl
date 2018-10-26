@@ -150,7 +150,7 @@ public class AuthService {
 			return oResult;
 		}
 		if (oSettings == null) {
-			oResult.StringValue = "Si è verificato un errore si prega di riprovare";
+			oResult.StringValue = "Si Ã¨ verificato un errore si prega di riprovare";
 			return oResult;
 		}
 		
@@ -219,7 +219,7 @@ public class AuthService {
 			return oResult;
 		}
 		if (oSettings == null) {
-			oResult.StringValue = "Si è verificato un errore si prega di riprovare";
+			oResult.StringValue = "Si Ã¨ verificato un errore si prega di riprovare";
 			return oResult;
 		}
 		
