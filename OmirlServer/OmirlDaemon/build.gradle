@@ -1,8 +1,35 @@
 apply plugin: 'java'
 
+repositories {
+    mavenCentral()
+  maven { url "http://download.osgeo.org/webdav/geotools/" }
+}
+
+
 dependencies {
-    compile fileTree(dir: 'lib/', include: ['*.jar'])
+    //compile fileTree(dir: 'lib/', include: ['*.jar'])
+    compile group: 'joda-time', name: 'joda-time', version: '2.4'
+    compile group: 'org.jdom', name: 'jdom', version: '2.0.0'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    compile group: 'net.java.dev.jsr-275', name: 'jsr-275', version: '1.0-beta-2'
+
+
+    compile ("org.geotools:gt-api:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-data:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-main:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-jdbc:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-coverage:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-postgis-versioned:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-epsg-wkt:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-geotiff:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-xml:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-wms:8.3") { exclude module: 'jai_core' }
+    compile ("org.geotools:gt-shapefile:8.3") { exclude module: 'jai_core' }
     compile project(':OmirlBusinessData')
+
+
+
+
 }
 
 sourceSets {

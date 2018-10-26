@@ -1,9 +1,14 @@
 apply plugin: 'java'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
+    compile group: 'joda-time', name: 'joda-time', version: '2.4'
     compile fileTree(dir: 'WebContent/WEB-INF/lib/', include: ['*.jar'])
     compile project(':OmirlBusinessData')
-    compile project(':OmirlDaemon')
+//    compile project(':OmirlDaemon')
 }
 
 sourceSets {
