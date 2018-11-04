@@ -1,5 +1,11 @@
 apply plugin: 'java'
 
+repositories {
+    maven { url "http://download.osgeo.org/webdav/geotools/" }
+    maven { url "http://packages.atlassian.com/maven-3rdparty/"}
+    mavenCentral()
+}
+
 sourceSets {
     main {
         java {
@@ -15,7 +21,21 @@ sourceSets {
         }
     }
 }
-
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
 dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
+//    compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-c3p0', version: '4.3.0.Final'
+    compile group: 'javax.media', name: 'jai-core', version: '1.1.3'
+    compile group: 'com.owlike', name: 'genson', version: '0.98'
+    compile ("org.geotools:gt-api:8.3") 
+    compile ("org.geotools:gt-geotiff:8.3") 
+    compile ("org.geotools:gt-shapefile:8.3") 
+    compile ("org.geotools:gt-coverage:8.3") 
+
 }
