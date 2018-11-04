@@ -6,16 +6,18 @@ targetCompatibility = 1.8
 version = 1.0
 
 repositories {
+    
     maven { url "http://download.osgeo.org/webdav/geotools/" }
+    maven { url "https://packages.atlassian.com/maven-3rdparty/"}
     mavenCentral()
 
 }
 
 
 dependencies {
+    compile project(':OmirlBusinessData')
     compile project(':Omirl')
     compile project(':OmirlDaemon')
-    compile project(':OmirlBusinessData')
 }
 
 jar {
