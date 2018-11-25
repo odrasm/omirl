@@ -1,12 +1,16 @@
 package it.fadeout.omirl.geoserver;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.Vector;
@@ -26,6 +30,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 
 import sun.misc.BASE64Encoder;
+
 
 public class GeoServerDataManager2 implements IGeoServerDataManager {
 
@@ -54,49 +59,59 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 
 		synchronized(m_oGeoServerCriticalSection) {
 
+			
+			
+			//check if coverage exist
+			
+			
 			//crea il coveragestores
+			
+			
+			
 			URL oUrlCoverageStore = new URL(m_GsUrl + "rest/workspaces/" + sNameSpace + "/coveragestores/");
 
 			System.out.println("COVERAGE STORE: " + oUrlCoverageStore.toString());
-
-			String sInDataStore =  "<coverageStore>"
-					+ "<name>" + sLayerName + "</name>"
-					+ "<enabled>true</enabled>"
-					+ "<workspace><name>" + sNameSpace + "</name></workspace>"
-					+ "<type>GeoTIFF</type>"
-					+ "<url>file:" + gsFile + "</url>" 
-					+ "</coverageStore>";
-			geoserverAction("POST", oUrlCoverageStore, m_GsUser, m_GsPsw, sInDataStore);
-
+			if (!ExistsCoverageStore(sNameSpace, sLayerName)) {
+			
+				String sInDataStore =  "<coverageStore>"
+						+ "<name>" + sLayerName + "</name>"
+						+ "<enabled>true</enabled>"
+						+ "<workspace><name>" + sNameSpace + "</name></workspace>"
+						+ "<type>GeoTIFF</type>"
+						+ "<url>file:" + gsFile + "</url>" 
+						+ "</coverageStore>";
+				geoserverAction("POST", oUrlCoverageStore, m_GsUser, m_GsPsw, sInDataStore);
+			}
+			System.out.println("Added Store "+sLayerName);
 			//crea il coverage
 			URL oUrlCoverages = new URL(m_GsUrl + "rest/workspaces/" + sNameSpace + "/coveragestores/" + sLayerName + "/coverages/");
 
 			System.out.println("COVERAGE: " + oUrlCoverages.toString());
-
-			String sInCoverages = "<coverage>"
-					+ "<name>" + sLayerName + "</name>"
-					+ "<nativeName>" + sLayerName + "</nativeName>"
-					+ "<namespace><name>" + sNameSpace + "</name></namespace>"
-					+ "<nativeCRS>EPSG:4326</nativeCRS>"
-					+ "<srs>EPSG:4326</srs>"
-					+ "<nativeBoundingBox>"
-					+ "<minx>5.0</minx><maxx>19.0</maxx><miny>37.0</miny><maxy>50.0</maxy>"
-					+ "<crs>EPSG:4326</crs>"
-					+ "</nativeBoundingBox>"
-					+ "<latLonBoundingBox>"
-					+ "<minx>5.0</minx><maxx>19.0</maxx><miny>37.0</miny><maxy>50.0</maxy>"
-					+ "<crs>EPSG:4326</crs>"
-					+ "</latLonBoundingBox>"
-					+ "<projectionPolicy>FORCE_DECLARED</projectionPolicy>"
-					+ "<enabled>true</enabled>"
-					+ "<store><name>" + sLayerName + "</name></store>"
-					+ "<grid><range><low>0 0</low><high>0 0</high></range><transform><scaleX>0.5</scaleX><scaleY>-0.5</scaleY><shearX>0.0</shearX><shearX>0.0</shearX>"
-					+ "<translateX>0.0</translateX><translateY>0.0</translateY></transform><crs>EPSG:4326</crs></grid>"
-					+ "</coverage>";
-
-			geoserverAction("POST", oUrlCoverages, m_GsUser, m_GsPsw, sInCoverages);
-
-
+			if (!ExistsCoverage(sNameSpace, sLayerName)) {
+				String sInCoverages = "<coverage>"
+						+ "<name>" + sLayerName + "</name>"
+						+ "<nativeName>" + sLayerName + "</nativeName>"
+						+ "<namespace><name>" + sNameSpace + "</name></namespace>"
+						+ "<nativeCRS>EPSG:4326</nativeCRS>"
+						+ "<srs>EPSG:4326</srs>"
+						+ "<nativeBoundingBox>"
+						+ "<minx>5.0</minx><maxx>19.0</maxx><miny>37.0</miny><maxy>50.0</maxy>"
+						+ "<crs>EPSG:4326</crs>"
+						+ "</nativeBoundingBox>"
+						+ "<latLonBoundingBox>"
+						+ "<minx>5.0</minx><maxx>19.0</maxx><miny>37.0</miny><maxy>50.0</maxy>"
+						+ "<crs>EPSG:4326</crs>"
+						+ "</latLonBoundingBox>"
+						+ "<projectionPolicy>FORCE_DECLARED</projectionPolicy>"
+						+ "<enabled>true</enabled>"
+						+ "<store><name>" + sLayerName + "</name></store>"
+						+ "<grid><range><low>0 0</low><high>0 0</high></range><transform><scaleX>0.5</scaleX><scaleY>-0.5</scaleY><shearX>0.0</shearX><shearX>0.0</shearX>"
+						+ "<translateX>0.0</translateX><translateY>0.0</translateY></transform><crs>EPSG:4326</crs></grid>"
+						+ "</coverage>";
+				
+				geoserverAction("POST", oUrlCoverages, m_GsUser, m_GsPsw, sInCoverages);
+				
+			}
 			//definisce lo stile del layer
 
 			URL oUrlLayerStyle = new URL(m_GsUrl + "rest/layers/"+ sNameSpace + ":" + sLayerName);
@@ -108,8 +123,14 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 					+ "<defaultStyle><name>" + styleId + "</name></defaultStyle>"
 					+ "<enabled>true</enabled>"
 					+ "</layer>";
-
-			geoserverAction("PUT", oUrlLayerStyle, m_GsUser, m_GsPsw, sInStyle);
+			System.out.println("Before Add L.");
+			try {
+				geoserverAction("PUT", oUrlLayerStyle, m_GsUser, m_GsPsw, sInStyle);
+			}
+		catch(IllegalArgumentException e) {
+			System.out.println("the coverage exist");
+			
+		}
 
 		}
 
@@ -334,7 +355,7 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		try {
 			synchronized(m_oGeoServerCriticalSection) {
 
-				URL oUrlLayer = new URL(m_GsUrl + "rest/layers/"+ sNameSpace + ":" + sLayerName);
+				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/layer/" + sLayerName);
 
 				String sResponse = geoserverGETAction(oUrlLayer, m_GsUser, m_GsPsw);
 
@@ -352,23 +373,131 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 				return false;
 			}			
 		}
+		catch (FileNotFoundException oEx) {
+			return false;
+		}
 		catch (Exception oEx) {
 			oEx.printStackTrace();
 		}
 
 		return false;
 	}
-
-
-	private void geoserverAction(String sMethod, URL oUrlToSand, String sUser, String sPsw, String sInputAction) throws IOException
+	
+	
+	
+	public boolean ExistsCoverage(String sNameSpace, String sCoverageName) throws IOException
 	{
+		try {
+			synchronized(m_oGeoServerCriticalSection) {
 
+				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/" + sCoverageName+ "/coverages");
+
+				String sResponse = geoserverGETAction(oUrlLayer, m_GsUser, m_GsPsw);
+
+				if (sResponse!=null)
+				{
+					if (!sResponse.isEmpty())
+					{
+						if (sResponse.contains("<name>"+sCoverageName+"</name>"))
+						{
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}			
+		}
+		catch (FileNotFoundException oEx) {
+			return false;
+		}
+		catch (Exception oEx) {
+			oEx.printStackTrace();
+		}
+
+		return false;
+	}
+	public boolean ExistsCoverageStore(String sNameSpace, String sCoverageName) throws IOException
+	{
+		try {
+			synchronized(m_oGeoServerCriticalSection) {
+
+				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/");
+
+				String sResponse = geoserverGETAction(oUrlLayer, m_GsUser, m_GsPsw);
+
+				if (sResponse!=null)
+				{
+					if (!sResponse.isEmpty())
+					{
+						if (sResponse.contains(sCoverageName))
+						{
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}			
+		}
+		catch (FileNotFoundException oEx) {
+			return false;
+		}
+		catch (Exception oEx) {
+			oEx.printStackTrace();
+		}
+
+		return false;
+	}
+	  private void geoserverAction(String sMethod, URL oUrlToSand, String sUser, String sPsw, String sInputAction) throws IOException
+	  {
+
+	    HttpURLConnection oGeoServerConn = (HttpURLConnection)oUrlToSand.openConnection();
+	    oGeoServerConn.setRequestMethod(sMethod);
+	    
+	    String usernameColonPassword =sUser+":"+sPsw;
+		String basicAuthPayload = "Basic " + Base64.getEncoder().encodeToString(usernameColonPassword.getBytes());
+	   
+	    oGeoServerConn.setRequestProperty("Authorization", "Basic " + basicAuthPayload);
+	    oGeoServerConn.setRequestProperty("Content-Type","text/xml");
+	    oGeoServerConn.setRequestProperty("Accept","text/xml");
+
+	    if(!sMethod.equals("DELETE")){
+
+	      oGeoServerConn.setDoOutput(true);
+	      OutputStream output = oGeoServerConn.getOutputStream();
+	      if(sInputAction != null) output.write(sInputAction.getBytes("UTF-8"));
+
+	    }
+
+	    oGeoServerConn.connect();
+	    byte abBuffer[] = new byte[8192];
+	    int read = 0;
+
+	    //risposta 
+	    InputStream responseBodyStream = oGeoServerConn.getInputStream();
+	    StringBuffer responseBody = new StringBuffer();
+	    while ((read = responseBodyStream.read(abBuffer)) != -1)
+	    {
+	      responseBody.append(new String(abBuffer, 0, read));
+	    }
+	    oGeoServerConn.disconnect();
+
+
+	  }
+
+	/*private void geoserverAction(String sMethod, URL oUrlToSand, String sUser, String sPsw, String sInputAction) throws IOException
+	{
+		System.out.println("In geoserverAction");
 		HttpURLConnection oGeoServerConn = (HttpURLConnection)oUrlToSand.openConnection();
 		oGeoServerConn.setRequestMethod(sMethod);
-
-		BASE64Encoder oEncoder = new BASE64Encoder();
-		String encodedCredential = oEncoder.encode((sUser + ":" + sPsw).getBytes());
-		oGeoServerConn.setRequestProperty("Authorization", "Basic " + encodedCredential);
+		oGeoServerConn.setReadTimeout(10000);
+		oGeoServerConn.setConnectTimeout(10000);
+		
+		String usernameColonPassword = sUser+":"+sPsw;
+		String basicAuthPayload = "Basic " + Base64.getEncoder().encodeToString(usernameColonPassword.getBytes());
+		
+		oGeoServerConn.setRequestProperty("Authorization", "Basic " + basicAuthPayload);
 		oGeoServerConn.setRequestProperty("Content-Type","text/xml");
 		oGeoServerConn.setRequestProperty("Accept","text/xml");
 
@@ -381,48 +510,57 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		}
 
 		oGeoServerConn.connect();
-		byte abBuffer[] = new byte[8192];
-		int read = 0;
-
-		//risposta 
-		InputStream responseBodyStream = oGeoServerConn.getInputStream();
+		
+		BufferedReader httpResponseReader = null;
 		StringBuffer responseBody = new StringBuffer();
-		while ((read = responseBodyStream.read(abBuffer)) != -1)
-		{
-			responseBody.append(new String(abBuffer, 0, read));
-		}
+		
+		httpResponseReader =
+		            new BufferedReader(new InputStreamReader(oGeoServerConn.getInputStream()));
+		    String lineRead;
+		    System.out.println("before recive 2");
+		    while((lineRead = httpResponseReader.readLine()) != null) {
+		        responseBody.append(lineRead);
+		    }
+		    
+		    System.out.println("after recive 2");
+		    System.out.println("bbbbb  "+responseBody.toString());
 		oGeoServerConn.disconnect();
 
 
-	}
+	}*/
 
 
 	private String geoserverGETAction(URL oUrlToSand, String sUser, String sPsw) throws IOException
 	{
 
+		
+		BufferedReader httpResponseReader = null;
+
 		HttpURLConnection oGeoServerConn = (HttpURLConnection)oUrlToSand.openConnection();
+		oGeoServerConn.setConnectTimeout(10000);
 		oGeoServerConn.setRequestMethod("GET");
+		oGeoServerConn.setDoOutput(true);
+		String usernameColonPassword =sUser+":"+sPsw;
+		String basicAuthPayload = "Basic " + Base64.getEncoder().encodeToString(usernameColonPassword.getBytes());
+		
+		 oGeoServerConn.addRequestProperty("Authorization", basicAuthPayload);
+		 oGeoServerConn.setRequestProperty("Content-Type","application/json");
+		 oGeoServerConn.setRequestProperty("Accept","*/*");
+	
+		 oGeoServerConn.connect();
+		 
+		 StringBuffer responseBody = new StringBuffer();
 
-		BASE64Encoder oEncoder = new BASE64Encoder();
-		String encodedCredential = oEncoder.encode((sUser + ":" + sPsw).getBytes());
-		oGeoServerConn.setRequestProperty("Authorization", "Basic " + encodedCredential);
-		//oGeoServerConn.setRequestProperty("Content-Type","text/xml");
-		oGeoServerConn.setRequestProperty("Accept","text/xml");
-
-		//oGeoServerConn.setDoOutput(true);
-		//OutputStream output = oGeoServerConn.getOutputStream();
-
-		oGeoServerConn.connect();
-		byte abBuffer[] = new byte[8192];
-		int read = 0;
-
-		//risposta 
-		InputStream responseBodyStream = oGeoServerConn.getInputStream();
-		StringBuffer responseBody = new StringBuffer();
-		while ((read = responseBodyStream.read(abBuffer)) != -1)
-		{
-			responseBody.append(new String(abBuffer, 0, read));
-		}
+		 
+		 
+		 httpResponseReader =
+		            new BufferedReader(new InputStreamReader(oGeoServerConn.getInputStream()));
+		    String lineRead;
+		    System.out.println("before recive");
+		    while((lineRead = httpResponseReader.readLine()) != null) {
+		        responseBody.append(lineRead);
+		    }
+		    System.out.println("after"); 
 		oGeoServerConn.disconnect();
 
 		return responseBody.toString();
