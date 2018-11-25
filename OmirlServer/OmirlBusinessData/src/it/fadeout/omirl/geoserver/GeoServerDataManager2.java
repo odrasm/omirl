@@ -29,7 +29,6 @@ import org.opengis.feature.type.PropertyDescriptor;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 
-import sun.misc.BASE64Encoder;
 
 
 public class GeoServerDataManager2 implements IGeoServerDataManager {
