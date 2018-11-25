@@ -19,7 +19,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 @Path("/auth")
 public class AuthService {
@@ -150,7 +149,7 @@ public class AuthService {
 			return oResult;
 		}
 		if (oSettings == null) {
-			oResult.StringValue = "Si è verificato un errore si prega di riprovare";
+			oResult.StringValue = "Si ï¿½ verificato un errore si prega di riprovare";
 			return oResult;
 		}
 		
@@ -219,7 +218,7 @@ public class AuthService {
 			return oResult;
 		}
 		if (oSettings == null) {
-			oResult.StringValue = "Si è verificato un errore si prega di riprovare";
+			oResult.StringValue = "Si ï¿½ verificato un errore si prega di riprovare";
 			return oResult;
 		}
 		
