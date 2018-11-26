@@ -31,6 +31,7 @@ import com.vividsolutions.jts.geom.Point;
 
 
 
+
 public class GeoServerDataManager2 implements IGeoServerDataManager {
 
 	private  String m_GsUrl= null;
@@ -122,7 +123,7 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 					+ "<defaultStyle><name>" + styleId + "</name></defaultStyle>"
 					+ "<enabled>true</enabled>"
 					+ "</layer>";
-			System.out.println("Before Add L.");
+			
 			try {
 				geoserverAction("PUT", oUrlLayerStyle, m_GsUser, m_GsPsw, sInStyle);
 			}
@@ -421,7 +422,7 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		try {
 			synchronized(m_oGeoServerCriticalSection) {
 
-				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/");
+				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/"+sCoverageName	);
 
 				String sResponse = geoserverGETAction(oUrlLayer, m_GsUser, m_GsPsw);
 
@@ -451,11 +452,14 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 	  private void geoserverAction(String sMethod, URL oUrlToSand, String sUser, String sPsw, String sInputAction) throws IOException
 	  {
 
+		  
+		BufferedReader httpResponseReader = null;
+
 	    HttpURLConnection oGeoServerConn = (HttpURLConnection)oUrlToSand.openConnection();
 	    oGeoServerConn.setRequestMethod(sMethod);
 	    
 	    String usernameColonPassword =sUser+":"+sPsw;
-		String basicAuthPayload = "Basic " + Base64.getEncoder().encodeToString(usernameColonPassword.getBytes());
+		String basicAuthPayload =  Base64.getEncoder().encodeToString(usernameColonPassword.getBytes());
 	   
 	    oGeoServerConn.setRequestProperty("Authorization", "Basic " + basicAuthPayload);
 	    oGeoServerConn.setRequestProperty("Content-Type","text/xml");
@@ -470,16 +474,19 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 	    }
 
 	    oGeoServerConn.connect();
-	    byte abBuffer[] = new byte[8192];
-	    int read = 0;
-
-	    //risposta 
-	    InputStream responseBodyStream = oGeoServerConn.getInputStream();
+	    
 	    StringBuffer responseBody = new StringBuffer();
-	    while ((read = responseBodyStream.read(abBuffer)) != -1)
-	    {
-	      responseBody.append(new String(abBuffer, 0, read));
-	    }
+
+		 
+		 
+		 httpResponseReader =
+		            new BufferedReader(new InputStreamReader(oGeoServerConn.getInputStream()));
+		    String lineRead;
+		    while((lineRead = httpResponseReader.readLine()) != null) {
+		        responseBody.append(lineRead);
+		    }
+	    
+	   
 	    oGeoServerConn.disconnect();
 
 
@@ -555,11 +562,9 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		 httpResponseReader =
 		            new BufferedReader(new InputStreamReader(oGeoServerConn.getInputStream()));
 		    String lineRead;
-		    System.out.println("before recive");
 		    while((lineRead = httpResponseReader.readLine()) != null) {
 		        responseBody.append(lineRead);
 		    }
-		    System.out.println("after"); 
 		oGeoServerConn.disconnect();
 
 		return responseBody.toString();
