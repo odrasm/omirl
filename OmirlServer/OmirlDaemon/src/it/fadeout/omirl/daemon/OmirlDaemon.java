@@ -209,7 +209,13 @@ public class OmirlDaemon {
 				}
 
 
-						try {
+				try {
+					
+					
+					
+					// Publish new Maps
+					System.out.println("OmirlDaemon - Publish Maps");
+					if (m_oConfig.isEnableMaps()) publishMaps();
 
 					System.out.println("OmirlDaemon - Starting Charts Cycle");
 
