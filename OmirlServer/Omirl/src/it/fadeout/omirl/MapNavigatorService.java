@@ -68,7 +68,7 @@ public class MapNavigatorService {
 		try {
 			String sConfigFilePath = m_oServletConfig.getInitParameter("ConfigFilePath");
 			
-			oConfig = Omirl.deserializeXMLToObject(sConfigFilePath);
+			oConfig = Omirl.deserializeXMLToObject(sConfigFilePath,false);
 			
 			OmirlNavigationConfig oConfiguration = (OmirlNavigationConfig) oConfig;
 			

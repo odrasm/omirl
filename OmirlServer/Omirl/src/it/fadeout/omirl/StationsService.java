@@ -83,7 +83,7 @@ public class StationsService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -130,7 +130,7 @@ public class StationsService {
 
 							try {
 								// Ok read sensors 
-								aoSensors = (List<SensorViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+								aoSensors = (List<SensorViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 								//Set Updated Date
 								if (aoSensors.size() > 0)
 								{
@@ -276,7 +276,7 @@ public class StationsService {
 
 			try {
 				// Ok read sensors 
-				oTable = (SensorListTableViewModel) Omirl.deserializeXMLToObject(sPath);
+				oTable = (SensorListTableViewModel) Omirl.deserializeXMLToObject(sPath,oConfig.isGzipXml());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}							
@@ -320,7 +320,7 @@ public class StationsService {
 
 			try {
 				// Ok read sensors 
-				oTable = (SensorListTableViewModel) Omirl.deserializeXMLToObject(sPath);
+				oTable = (SensorListTableViewModel) Omirl.deserializeXMLToObject(sPath,oConfig.isGzipXml());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}							
@@ -402,7 +402,7 @@ public class StationsService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -444,7 +444,7 @@ public class StationsService {
 
 					try {
 						// Ok read sensors 
-						oTable = (SensorValueTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oTable = (SensorValueTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 						if (oTable != null)
 						{
 							Date oLastDate = new Date(oLastFile.lastModified()); 
@@ -489,7 +489,7 @@ public class StationsService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -530,7 +530,7 @@ public class StationsService {
 
 					try {
 						// Ok read sensors 
-						oTable = (SensorValueTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oTable = (SensorValueTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

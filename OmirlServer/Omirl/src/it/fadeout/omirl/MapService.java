@@ -63,7 +63,7 @@ public class MapService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 					
@@ -107,7 +107,7 @@ public class MapService {
 				try {
 					
 					// Ok read sections 
-					aoOutputInfo = (List<MapInfoViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+					aoOutputInfo = (List<MapInfoViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}	

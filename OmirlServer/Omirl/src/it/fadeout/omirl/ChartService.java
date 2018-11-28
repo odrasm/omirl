@@ -134,7 +134,7 @@ public class ChartService {
 
 					try {
 						// Ok read sensors 
-						oDataChart = (DataChart) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oDataChart = (DataChart) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}							
@@ -233,7 +233,7 @@ public class ChartService {
 
 					try {
 						// Ok read sensors 
-						oDataChart = (DataChart) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oDataChart = (DataChart) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml() );
 					} catch (Exception e) {
 						e.printStackTrace();
 					}							
@@ -445,7 +445,7 @@ public class ChartService {
 
 							try {
 								// Ok read sections 
-								List<SectionViewModel> aoSections = (List<SectionViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+								List<SectionViewModel> aoSections = (List<SectionViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 								if (aoSections !=null) {
 									if (aoSections.size()>0) {
 										sSubPath = aoSections.get(0).getSubFolder();
@@ -536,7 +536,7 @@ public class ChartService {
 
 										try {
 											// Ok read sections 
-											List<SectionViewModel> aoSections = (List<SectionViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+											List<SectionViewModel> aoSections = (List<SectionViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 											if (aoSections !=null) {
 												if (aoSections.size()>0) {
 													sSubPath = aoSections.get(0).getSubFolder();

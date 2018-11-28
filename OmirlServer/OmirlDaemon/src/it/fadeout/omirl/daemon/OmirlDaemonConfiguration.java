@@ -48,6 +48,9 @@ public class OmirlDaemonConfiguration {
 	boolean enableValueTable;
 	boolean enableGallery;
 	
+	boolean enableGzipChart;
+	
+
 	boolean enableThreshold;
 	boolean enableStationsTable;
 	boolean enableSectionsLayer;
@@ -363,7 +366,13 @@ public class OmirlDaemonConfiguration {
 	}
 
 	public void setDbBufferDataDays(int dbBufferDataDays) {
-		dbBufferDataDays = dbBufferDataDays;
+		this.dbBufferDataDays = dbBufferDataDays;
+	}
+	public boolean isEnableGzipChart() {
+		return enableGzipChart;
 	}
 
+	public void setEnableGzipChart(boolean enableGzipChart) {
+		this.enableGzipChart = enableGzipChart;
+	}
 	}

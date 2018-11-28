@@ -52,7 +52,7 @@ public class SectionsService {
 				if (sRefDate.equals("") == false) 
 				{
 					// Try e catch per fare il parsing 
-					// se è valido sostituire oDate.
+					// se ï¿½ valido sostituire oDate.
 					SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 					try {
 						
@@ -102,7 +102,7 @@ public class SectionsService {
 	
 								try {
 									// Ok read sections 
-									aoSections = (List<SectionViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+									aoSections = (List<SectionViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 									if (aoSections.size() > 0)
 									{
 										Date oLastDate = new Date(oLastFile.lastModified()); 

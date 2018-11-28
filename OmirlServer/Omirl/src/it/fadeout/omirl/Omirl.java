@@ -28,6 +28,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.annotation.Retention;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -47,6 +48,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
+import java.util.zip.GZIPInputStream;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletConfig;
@@ -122,7 +124,7 @@ public class Omirl extends Application {
 		try {
 
 			// Deserialize XML File
-			oConfig = deserializeXMLToObject(sFilePath);
+			oConfig = deserializeXMLToObject(sFilePath,false);
 
 			// Cast to Config
 			OmirlNavigationConfig oConfiguration = (OmirlNavigationConfig) oConfig;
@@ -475,9 +477,12 @@ public class Omirl extends Application {
 	/**
 	 * Reads Java Bean Object From XML File
 	 */
-	public static Object deserializeXMLToObject(String xmlFileLocation) throws Exception {
+	public static Object deserializeXMLToObject(String xmlFileLocation,boolean isGzipXml) throws Exception {
+		
 		FileInputStream os = new FileInputStream(xmlFileLocation);
-		XMLDecoder decoder = new XMLDecoder(os);
+        InputStream outStream; 
+		outStream = (isGzipXml) ?  new GZIPInputStream(os) :  os;
+	    XMLDecoder decoder = new XMLDecoder(outStream);
 		Object deSerializedObject = decoder.readObject();
 		decoder.close();
 

@@ -13,6 +13,8 @@ public class OmirlNavigationConfig {
 	String geoServerWorkspace;
 	String geoServerStore;
 	int backDaysSearch = 1;
+
+	boolean isGzipXml=false;
 	
 	ArrayList<MapLinkConfig> mapLinks = new ArrayList<MapLinkConfig>();
 	ArrayList<SensorLinkConfig> sensorLinks = new ArrayList<SensorLinkConfig>();
@@ -172,5 +174,11 @@ public class OmirlNavigationConfig {
 	}
 	public void setBackDaysSearch(int backDaysSearch) {
 		this.backDaysSearch = backDaysSearch;
+	}
+	public boolean isGzipXml() {
+		return isGzipXml;
+	}
+	public void setGzipXml(boolean isGzipXml) {
+		this.isGzipXml = isGzipXml;
 	}
 }

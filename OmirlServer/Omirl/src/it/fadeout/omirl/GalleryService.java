@@ -50,7 +50,7 @@ public class GalleryService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 					
@@ -103,7 +103,7 @@ public class GalleryService {
 
 					try {
 						// Ok read sections 
-						oGallery = (ModelGallery) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oGallery = (ModelGallery) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}							
