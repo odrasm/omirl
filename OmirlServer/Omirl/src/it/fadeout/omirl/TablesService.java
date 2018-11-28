@@ -172,7 +172,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -215,7 +215,7 @@ public class TablesService {
 
 					try {
 						// Ok read sensors 
-						oSummaryInfo = (SummaryInfo) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oSummaryInfo = (SummaryInfo) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 						if (oSummaryInfo != null)
 						{
 							Date oLastDate = new Date(oLastFile.lastModified()); 
@@ -253,7 +253,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -296,7 +296,7 @@ public class TablesService {
 
 					try {
 						// Ok read sensors 
-						oMaxTable = (MaxTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oMaxTable = (MaxTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 						if (oMaxTable != null)
 						{
 							Date oLastDate = new Date(oLastFile.lastModified()); 
@@ -331,7 +331,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -374,7 +374,7 @@ public class TablesService {
 
 					try {
 						// Ok read sensors 
-						oMaxTable = (MaxHydroAlertZoneViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oMaxTable = (MaxHydroAlertZoneViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 						if (oMaxTable != null)
 						{
 							Date oLastDate = new Date(oLastFile.lastModified()); 
@@ -483,7 +483,7 @@ public class TablesService {
 					if (sRefDate.equals("") == false) 
 					{
 						// Try e catch per fare il parsing 
-						// se è valido sostituire oDate.
+						// se ï¿½ valido sostituire oDate.
 						SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 						try {
 
@@ -531,7 +531,7 @@ public class TablesService {
 
 									try {
 										// Ok read sections 
-										aoSections = (List<SectionBasinsViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+										aoSections = (List<SectionBasinsViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 									} catch (Exception e) {
 										e.printStackTrace();
 									}							
@@ -607,7 +607,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateQueryParam);
 				try {
 
@@ -650,7 +650,7 @@ public class TablesService {
 
 					try {
 						// Ok read sensors 
-						oMaxTable = (MaxTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oMaxTable = (MaxTableViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}							
@@ -788,7 +788,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se ï¿½ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateQueryParam);
 				try {
 
@@ -831,7 +831,7 @@ public class TablesService {
 
 					try {
 						// Ok read sensors 
-						oMaxTable = (MaxHydroAlertZoneViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+						oMaxTable = (MaxHydroAlertZoneViewModel) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}							
@@ -850,7 +850,7 @@ public class TablesService {
 				public void write(OutputStream os) throws IOException, WebApplicationException {
 					Writer writer = new BufferedWriter(new OutputStreamWriter(os));
 					//Header
-					writer.write("Località;Provincia;Comune;Bacino;Corso;Massimo nelle 24H[m];Ora UTC del massimo;Valore all'ora di rif.[m];Ora di rif.;Area;\n");
+					writer.write("Localitï¿½;Provincia;Comune;Bacino;Corso;Massimo nelle 24H[m];Ora UTC del massimo;Valore all'ora di rif.[m];Ora di rif.;Area;\n");
 					if (oFinalTable.getAlertZonesA()!=null)
 					{
 						if (oFinalTable.getAlertZonesA().size()>0) 
@@ -1040,7 +1040,7 @@ public class TablesService {
 							if (sRefDate.equals("") == false) 
 							{
 								// Try e catch per fare il parsing 
-								// se è valido sostituire oDate.
+								// se ï¿½ valido sostituire oDate.
 								SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 								try {
 
@@ -1078,7 +1078,7 @@ public class TablesService {
 
 										try {
 											// Ok read sections 
-											aoSections = (List<SectionBasinsViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath());
+											aoSections = (List<SectionBasinsViewModel>) Omirl.deserializeXMLToObject(oLastFile.getAbsolutePath(),oConfig.isGzipXml());
 
 											final List<SectionBasinsViewModel> oEndList =aoSections; 
 											if (oEndList != null)
