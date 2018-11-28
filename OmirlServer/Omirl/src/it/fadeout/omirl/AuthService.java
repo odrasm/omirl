@@ -1,6 +1,8 @@
 package it.fadeout.omirl;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import it.fadeout.omirl.business.OmirlUser;
@@ -19,6 +21,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 @Path("/auth")
 public class AuthService {
@@ -61,11 +64,12 @@ public class AuthService {
 			return oUserVM;
 		}
 		
-		System.out.println("AuthService.Login: requested access from " + oLoginInfo.getUserId());
+		System.out.println("AuthService.Login: requested access from " + oLoginInfo.getUserId() );
 		
 		OmirlUserRepository oOmirlUserRepository = new OmirlUserRepository();
-		
-		boolean bLogged = oOmirlUserRepository.login(oLoginInfo.getUserId(), oLoginInfo.getUserPassword());
+		String hashed = Omirl.hashPassword(oLoginInfo.getUserPassword());
+		System.out.println("prima della Q "+hashed);
+		boolean bLogged = oOmirlUserRepository.login(oLoginInfo.getUserId(), hashed);
 		
 		if (bLogged)
 		{
@@ -132,6 +136,35 @@ public class AuthService {
 		
 		return oResult;
 	}
+	
+//	@GET
+//	@Path("/hash")
+//	@Produces({"application/xml", "application/json", "text/xml"})
+//	public PrimitiveResult hash(@HeaderParam("x-session-token") String sSessionId) {
+//		PrimitiveResult oResult = new PrimitiveResult();
+//		oResult.BoolValue = false;
+//		
+//		if (sSessionId == null) return oResult;
+//		if (sSessionId.isEmpty()) return oResult;
+//		
+//		OpenSessionRepository oOpenSessionRepository = new OpenSessionRepository();
+//		OpenSession oSession = oOpenSessionRepository.selectBySessionId(sSessionId);
+//		if(oSession != null) {
+//			OmirlUserRepository oOmirlUserRepository = new OmirlUserRepository();
+//			
+//			List<OmirlUser> users = oOmirlUserRepository.SelectAll(OmirlUser.class);
+//			for (OmirlUser user: users) {
+//				String hashed = Omirl.hashPassword(user.getPassword());
+//				user.setPassword(hashed);
+//				oOmirlUserRepository.Save(user);
+//			}
+//			
+//			oResult.BoolValue = true;
+//		}
+//		
+//		return oResult;
+//	}
+//	
 	
 	@POST
 	@Path("/settings")

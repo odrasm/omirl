@@ -30,10 +30,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Retention;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -51,6 +54,9 @@ import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletSecurityElement;
@@ -523,6 +529,22 @@ public class Omirl extends Application {
 		return sFullDir;
 	}
 	
+	public static String hashPassword( String password) {
+	 	final String salt = "Omirl7856Salt";
+	 	
+	 	final int keyLength = 256;
+       try {
+    	   
+           SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
+           PBEKeySpec spec = new PBEKeySpec( password.toCharArray(), salt.getBytes(), 10, keyLength );
+           SecretKey key = skf.generateSecret( spec );
+           byte[] res = key.getEncoded( );
+           return String.format("%x", new BigInteger(res));
+ 
+       } catch( NoSuchAlgorithmException | InvalidKeySpecException e ) {
+           throw new RuntimeException( e );
+       }
+   }
 	
 	public static File lastFileByName(String dir, Date oRefDate) {
 		Path last=null;

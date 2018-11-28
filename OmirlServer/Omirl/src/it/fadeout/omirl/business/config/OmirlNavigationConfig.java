@@ -178,7 +178,7 @@ public class OmirlNavigationConfig {
 	public boolean isGzipXml() {
 		return isGzipXml;
 	}
-	public void setGzipXml(boolean isGzipXml) {
+	public void setIsGzipXml(boolean isGzipXml) {
 		this.isGzipXml = isGzipXml;
 	}
 }
