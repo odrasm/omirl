@@ -172,7 +172,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se Ã¨ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -253,7 +253,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se Ã¨ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -331,7 +331,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se Ã¨ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 
@@ -483,7 +483,7 @@ public class TablesService {
 					if (sRefDate.equals("") == false) 
 					{
 						// Try e catch per fare il parsing 
-						// se è valido sostituire oDate.
+						// se Ã¨ valido sostituire oDate.
 						SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 						try {
 
@@ -607,7 +607,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se Ã¨ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateQueryParam);
 				try {
 
@@ -788,7 +788,7 @@ public class TablesService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se Ã¨ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateQueryParam);
 				try {
 
@@ -850,7 +850,7 @@ public class TablesService {
 				public void write(OutputStream os) throws IOException, WebApplicationException {
 					Writer writer = new BufferedWriter(new OutputStreamWriter(os));
 					//Header
-					writer.write("Località;Provincia;Comune;Bacino;Corso;Massimo nelle 24H[m];Ora UTC del massimo;Valore all'ora di rif.[m];Ora di rif.;Area;\n");
+					writer.write("LocalitÃ ;Provincia;Comune;Bacino;Corso;Massimo nelle 24H[m];Ora UTC del massimo;Valore all'ora di rif.[m];Ora di rif.;Area;\n");
 					if (oFinalTable.getAlertZonesA()!=null)
 					{
 						if (oFinalTable.getAlertZonesA().size()>0) 
@@ -1040,7 +1040,7 @@ public class TablesService {
 							if (sRefDate.equals("") == false) 
 							{
 								// Try e catch per fare il parsing 
-								// se è valido sostituire oDate.
+								// se Ã¨ valido sostituire oDate.
 								SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 								try {
 
