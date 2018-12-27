@@ -209,6 +209,7 @@ public class OmirlDaemon {
 				}
 
 
+<<<<<<< HEAD
 				try {
 					
 					
@@ -216,6 +217,9 @@ public class OmirlDaemon {
 					// Publish new Maps
 					System.out.println("OmirlDaemon - Publish Maps");
 					if (m_oConfig.isEnableMaps()) publishMaps();
+=======
+						try {
+>>>>>>> 486bc80... sync with old repository
 
 					System.out.println("OmirlDaemon - Starting Charts Cycle");
 
@@ -1195,10 +1199,17 @@ public class OmirlDaemon {
 
 			try {
 				Thread.sleep(m_oConfig.getMinutesPolling()*60*1000);
+<<<<<<< HEAD
 			}
 			catch(Exception oEx) {
 				oEx.printStackTrace();
 			}
+=======
+			}
+			catch(Exception oEx) {
+				oEx.printStackTrace();
+			}
+>>>>>>> 486bc80... sync with old repository
 		}						
 
 	}
@@ -1350,10 +1361,17 @@ private void GetWindDirectionSerie(List<WindDataSeriePoint> oInputWindDir, DataS
 		}
 
 		adPoint.setWindDir(GetPrevalentWindDirectionAlgorithm(oRefWindDirections));
+<<<<<<< HEAD
 
 		lStart = lNextStep;
 		oOutputWindDir.add(adPoint);
 
+=======
+
+		lStart = lNextStep;
+		oOutputWindDir.add(adPoint);
+
+>>>>>>> 486bc80... sync with old repository
 		iCycleCount++;
 	}
 
@@ -1379,10 +1397,17 @@ private Double GetPrevalentWindDirectionAlgorithm(List<WindDataSeriePoint> oRefW
 		oSectorMap.put(iSector, new ArrayList<WindDataSeriePoint>());
 		oFilteredSectorMap.put(iSector, 0.0);
 	}
+<<<<<<< HEAD
 
 
 	for (WindDataSeriePoint windDataSeriePoint : oRefWindDirection) {
 
+=======
+
+
+	for (WindDataSeriePoint windDataSeriePoint : oRefWindDirection) {
+
+>>>>>>> 486bc80... sync with old repository
 		if (windDataSeriePoint.getWindSpeed() <= 0.5)
 		{
 			dNumCalma++;
@@ -1681,10 +1706,17 @@ private void serializeSfloc()
 					if (oSensorViewModel != null) {
 						oSflocViewModelList.add(oSensorViewModel);
 					}						
+<<<<<<< HEAD
 				}
 				catch(Exception oInnerEx) {
 					oInnerEx.printStackTrace();
 				}
+=======
+				}
+				catch(Exception oInnerEx) {
+					oInnerEx.printStackTrace();
+				}
+>>>>>>> 486bc80... sync with old repository
 			}
 
 			Date oDate = new Date();
@@ -1747,6 +1779,7 @@ private String publishGeoTiff(String sFileName, String sNameSpace, String sStyle
 		}			
 
 		return sLayerId;
+<<<<<<< HEAD
 	}
 	
 	catch(IllegalArgumentException | IOException oEx) {
@@ -1754,6 +1787,15 @@ private String publishGeoTiff(String sFileName, String sNameSpace, String sStyle
 		return "";
 	}
 	
+=======
+	}
+	
+	catch(IllegalArgumentException | IOException oEx) {
+		System.out.println("maybe coverage already exist " + oEx.toString());
+		return "";
+	}
+	
+>>>>>>> 486bc80... sync with old repository
 	catch(Exception oEx) {
 		System.out.println("publishMaps Exception " + oEx.toString());
 		oEx.printStackTrace();
@@ -1921,6 +1963,7 @@ private void maxHydroAlertZones()
 							oViewModel.setValueOnDateRef(sensorLastData.getSensorvalue());
 							oViewModel.setDateRef(sensorLastData.getReference_date());
 						}
+<<<<<<< HEAD
 					}
 
 					switch (sWarningArea) {
@@ -1964,6 +2007,51 @@ private void maxHydroAlertZones()
 
 		String sFullDir = sOutputPath + "/" + oDateFormat.format(oActualDate);
 
+=======
+					}
+
+					switch (sWarningArea) {
+					case "A":
+						oMaxHydroAlertZoneViewModel.getAlertZonesA().add(oViewModel);
+						break;
+					case "B":
+						oMaxHydroAlertZoneViewModel.getAlertZonesB().add(oViewModel);
+						break;
+					case "C":
+						oMaxHydroAlertZoneViewModel.getAlertZonesC().add(oViewModel);
+						break;
+					case "D":
+						oMaxHydroAlertZoneViewModel.getAlertZonesD().add(oViewModel);
+						break;
+					case "E":
+						oMaxHydroAlertZoneViewModel.getAlertZonesE().add(oViewModel);
+						break;
+					case "M":
+						oMaxHydroAlertZoneViewModel.getAlertZonesM().add(oViewModel);
+						break;
+					case "C+":
+						oMaxHydroAlertZoneViewModel.getAlertZonesCPlus().add(oViewModel);
+						break;
+					case "C-":
+						oMaxHydroAlertZoneViewModel.getAlertZonesCLess().add(oViewModel);
+						break;
+					default:
+						break;
+					}
+
+				}
+			}
+		}
+
+		String sBasePath = m_oConfig.getFileRepositoryPath();
+
+		String sOutputPath = sBasePath + "/tables/maxhydrozones";
+
+		SimpleDateFormat oDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+		String sFullDir = sOutputPath + "/" + oDateFormat.format(oActualDate);
+
+>>>>>>> 486bc80... sync with old repository
 		File oOutPath = new File(sFullDir);
 		if (oOutPath.exists() == false) {
 			oOutPath.mkdirs();
@@ -2085,6 +2173,7 @@ private void maxTable() {
 					if (dValue> m_oConfig.getAlertMaxTable().getThreshold2().get(iCols))
 					{
 						sStyle = m_oConfig.getAlertMaxTable().getThreshold2Style();
+<<<<<<< HEAD
 					}
 					else if (dValue > m_oConfig.getAlertMaxTable().getThreshold1().get(iCols))
 					{
@@ -2100,6 +2189,23 @@ private void maxTable() {
 						System.out.println("Exception trying to set cell style. Method Name = " + sMethodName);
 						oEx.printStackTrace();
 					}
+=======
+					}
+					else if (dValue > m_oConfig.getAlertMaxTable().getThreshold1().get(iCols))
+					{
+						sStyle = m_oConfig.getAlertMaxTable().getThreshold1Style();
+					}
+
+					sMethodName = "set" + sMethodCode + "BkColor";
+					try {
+						oMethod = oRow.getClass().getMethod(sMethodName, String.class);
+						oMethod.invoke(oRow, sStyle);
+					} 
+					catch (Exception oEx) {
+						System.out.println("Exception trying to set cell style. Method Name = " + sMethodName);
+						oEx.printStackTrace();
+					}
+>>>>>>> 486bc80... sync with old repository
 
 				}
 				else {
@@ -2171,6 +2277,19 @@ private void maxTable() {
 						oEx.printStackTrace();
 					}
 
+<<<<<<< HEAD
+
+					sMethodName = "set" + sMethodCode;
+					try {
+						oMethod = oRow.getClass().getMethod(sMethodName, String.class);
+						oMethod.invoke(oRow, sText);
+					} 
+					catch (Exception oEx) {
+						System.out.println("Exception trying to set max Table text. Method Name = " + sMethodName);
+						oEx.printStackTrace();
+					}
+=======
+>>>>>>> 486bc80... sync with old repository
 
 					sMethodName = "set" + sMethodCode;
 					try {
@@ -2182,6 +2301,38 @@ private void maxTable() {
 						oEx.printStackTrace();
 					}
 
+<<<<<<< HEAD
+					sMethodName = "set" + sMethodCode + "code";
+					try {
+						oMethod = oRow.getClass().getMethod(sMethodName, String.class);
+						oMethod.invoke(oRow, sStationCode);
+					} 
+					catch (Exception oEx) {
+						System.out.println("Exception trying to set max Table code. Method Name = " + sMethodName);
+						oEx.printStackTrace();
+					}
+
+					String sStyle = "";
+
+					if (dValue> m_oConfig.getDistrictMaxTable().getThreshold2().get(iCols))
+					{
+						sStyle = m_oConfig.getDistrictMaxTable().getThreshold2Style();
+					}
+					else if (dValue > m_oConfig.getDistrictMaxTable().getThreshold1().get(iCols))
+					{
+						sStyle = m_oConfig.getDistrictMaxTable().getThreshold1Style();
+					}
+
+					sMethodName = "set" + sMethodCode + "BkColor";
+					try {
+						oMethod = oRow.getClass().getMethod(sMethodName, String.class);
+						oMethod.invoke(oRow, sStyle);
+					} 
+					catch (Exception oEx) {
+						System.out.println("Exception trying to set cell style. Method Name = " + sMethodName);
+						oEx.printStackTrace();
+					}
+=======
 
 					sMethodName = "set" + sMethodCode + "code";
 					try {
@@ -2213,6 +2364,7 @@ private void maxTable() {
 						System.out.println("Exception trying to set cell style. Method Name = " + sMethodName);
 						oEx.printStackTrace();
 					}
+>>>>>>> 486bc80... sync with old repository
 				}
 				else {
 					// No data available
@@ -2314,6 +2466,7 @@ private void summaryTable() {
 		SummaryInfoEntity oSvMax = oStationDataRepository.getDistrictMaxTemperatureSummaryInfo("SV", oActualDate, "Savona", "INASV");
 		DistrictSummaryInfo oDistrictSummarySv = new DistrictSummaryInfo();
 		oDistrictSummarySv.setDescription("Savona");
+<<<<<<< HEAD
 
 		if (oSvMax != null)
 		{
@@ -2451,7 +2604,264 @@ private void summaryTable() {
 			oZoneASummary.setRefDateMin(null);				
 		}
 
+=======
 
+		if (oSvMax != null)
+		{
+			oDistrictSummarySv.setMax(oSvMax.getValue());
+			oDistrictSummarySv.setStationMax(oSvMax.getStationName());	
+			oDistrictSummarySv.setRefDateMax(oSvMax.getReferenceDate());	
+		}
+		else 
+		{
+			oDistrictSummarySv.setMax(-9999.0);
+			oDistrictSummarySv.setStationMax("N.D.");
+			oDistrictSummarySv.setRefDateMax(null);
+		}
+
+		SummaryInfoEntity oSvMin = oStationDataRepository.getDistrictMinTemperatureSummaryInfo("SV", oActualDate, "Savona", "INASV");
+
+		if (oSvMin != null)
+		{
+			oDistrictSummarySv.setMin(oSvMin.getValue());
+			oDistrictSummarySv.setStationMin(oSvMin.getStationName());
+			oDistrictSummarySv.setRefDateMin(oSvMin.getReferenceDate());
+		}
+		else 
+		{
+			oDistrictSummarySv.setMin(-9999.0);
+			oDistrictSummarySv.setStationMin("N.D.");	
+			oDistrictSummarySv.setRefDateMin(null);
+		}
+
+		oSummaryInfo.getDistrictInfo().add(oDistrictSummarySv);
+
+
+
+		SummaryInfoEntity oImMax = oStationDataRepository.getDistrictMaxTemperatureSummaryInfo("IM", oActualDate, "Imperia", "IMPER");
+		DistrictSummaryInfo oDistrictSummaryIm = new DistrictSummaryInfo();
+		oDistrictSummaryIm.setDescription("Imperia");
+
+		if (oImMax != null)
+		{
+			oDistrictSummaryIm.setMax(oImMax.getValue());
+			oDistrictSummaryIm.setStationMax(oImMax.getStationName());
+			oDistrictSummaryIm.setRefDateMax(oImMax.getReferenceDate());
+		}
+		else 
+		{
+			oDistrictSummaryIm.setMax(-9999.0);
+			oDistrictSummaryIm.setStationMax("N.D.");
+			oDistrictSummaryIm.setRefDateMax(null);
+		}
+
+		SummaryInfoEntity oImMin = oStationDataRepository.getDistrictMinTemperatureSummaryInfo("IM", oActualDate, "Imperia" , "IMPER");
+
+		if (oImMin != null)
+		{
+			oDistrictSummaryIm.setMin(oImMin.getValue());
+			oDistrictSummaryIm.setStationMin(oImMin.getStationName());
+			oDistrictSummaryIm.setRefDateMin(oImMin.getReferenceDate());
+		}
+		else 
+		{
+			oDistrictSummaryIm.setMin(-9999.0);
+			oDistrictSummaryIm.setStationMin("N.D.");
+			oDistrictSummaryIm.setRefDateMin(null);
+		}
+
+		oSummaryInfo.getDistrictInfo().add(oDistrictSummaryIm);
+
+
+
+		SummaryInfoEntity oSpMax = oStationDataRepository.getDistrictMaxTemperatureSummaryInfo("SP", oActualDate, "La Spezia", "SPZIA");
+		DistrictSummaryInfo oDistrictSummarySp = new DistrictSummaryInfo();
+		oDistrictSummarySp.setDescription("La Spezia");
+
+		if (oSpMax!=null)
+		{
+			oDistrictSummarySp.setMax(oSpMax.getValue());
+			oDistrictSummarySp.setStationMax(oSpMax.getStationName());
+			oDistrictSummarySp.setRefDateMax(oSpMax.getReferenceDate());
+		}
+		else 
+		{				
+			oDistrictSummarySp.setMax(-9999.0);
+			oDistrictSummarySp.setStationMax("N.D.");
+			oDistrictSummarySp.setRefDateMax(null);
+		}
+
+		SummaryInfoEntity oSpMin = oStationDataRepository.getDistrictMinTemperatureSummaryInfo("SP", oActualDate, "La Spezia", "SPZIA");
+
+		if (oSpMin!=null)
+		{
+			oDistrictSummarySp.setMin(oSpMin.getValue());
+			oDistrictSummarySp.setStationMin(oSpMin.getStationName());	
+			oDistrictSummarySp.setRefDateMin(oSpMin.getReferenceDate());
+		}
+		else
+		{
+			oDistrictSummarySp.setMin(-9999.0);
+			oDistrictSummarySp.setStationMin("N.D.");
+			oDistrictSummarySp.setRefDateMin(null);
+		}
+
+		oSummaryInfo.getDistrictInfo().add(oDistrictSummarySp);
+
+		// trova il max e min temperatura di oggi x zona allertamento
+		AlertZoneSummaryInfo oZoneASummary = new AlertZoneSummaryInfo();
+		oZoneASummary.setDescription("A");
+
+		SummaryInfoEntity oAMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("A", oActualDate);
+
+		if (oAMax!=null)
+		{
+			oZoneASummary.setMax(oAMax.getValue());
+			oZoneASummary.setStationMax(oAMax.getStationName());
+			oZoneASummary.setRefDateMax(oAMax.getReferenceDate());
+		}
+		else
+		{
+			oZoneASummary.setMax(-9999.0);
+			oZoneASummary.setStationMax("N.D.");
+			oZoneASummary.setRefDateMax(null);				
+		}
+
+		SummaryInfoEntity oAMin = oStationDataRepository.getAlertZoneMinTemperatureSummaryInfo("A", oActualDate);
+
+		if (oAMin!=null)
+		{
+			oZoneASummary.setMin(oAMin.getValue());
+			oZoneASummary.setStationMin(oAMin.getStationName());
+			oZoneASummary.setRefDateMin(oAMin.getReferenceDate());
+		}
+		else
+		{
+			oZoneASummary.setMin(-9999.0);
+			oZoneASummary.setStationMin("N.D.");
+			oZoneASummary.setRefDateMin(null);				
+		}
+>>>>>>> 486bc80... sync with old repository
+
+		oSummaryInfo.getAlertInfo().add(oZoneASummary);
+
+<<<<<<< HEAD
+		AlertZoneSummaryInfo oZoneBSummary = new AlertZoneSummaryInfo();
+		oZoneBSummary.setDescription("B");
+
+
+		SummaryInfoEntity oBMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("B", oActualDate);
+
+		if (oBMax!=null)
+		{
+			oZoneBSummary.setMax(oBMax.getValue());
+			oZoneBSummary.setStationMax(oBMax.getStationName());
+			oZoneBSummary.setRefDateMax(oBMax.getReferenceDate());
+		}
+		else
+		{
+			oZoneBSummary.setMax(-9999.0);
+			oZoneBSummary.setStationMax("N.D.");
+			oZoneBSummary.setRefDateMax(null);				
+		}
+
+		SummaryInfoEntity oBMin = oStationDataRepository.getAlertZoneMinTemperatureSummaryInfo("B", oActualDate);
+
+		if (oBMin!=null)
+		{
+			oZoneBSummary.setMin(oBMin.getValue());
+			oZoneBSummary.setStationMin(oBMin.getStationName());
+			oZoneBSummary.setRefDateMin(oBMin.getReferenceDate());
+		}
+		else
+		{
+			oZoneBSummary.setMin(-9999.0);
+			oZoneBSummary.setStationMin("N.D.");
+			oZoneBSummary.setRefDateMin(null);				
+		}
+
+		oSummaryInfo.getAlertInfo().add(oZoneBSummary);
+
+		AlertZoneSummaryInfo oZoneCSummary = new AlertZoneSummaryInfo();
+		oZoneCSummary.setDescription("C");
+
+		//SummaryInfoEntity oCMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("B", oActualDate);
+		SummaryInfoEntity oCMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("C", oActualDate);
+
+		if (oBMax!=null)
+		{
+			oZoneCSummary.setMax(oCMax.getValue());
+			oZoneCSummary.setStationMax(oCMax.getStationName());
+			oZoneCSummary.setRefDateMax(oCMax.getReferenceDate());
+		}
+		else
+		{
+			oZoneCSummary.setMax(-9999.0);
+			oZoneCSummary.setStationMax("N.D.");
+			oZoneCSummary.setRefDateMax(null);				
+		}
+
+		//SummaryInfoEntity oCMin = oStationDataRepository.getAlertZoneMinTemperatureSummaryInfo("B", oActualDate);
+		SummaryInfoEntity oCMin = oStationDataRepository.getAlertZoneMinTemperatureSummaryInfo("C", oActualDate);
+
+		if (oBMin!=null)
+		{
+			oZoneCSummary.setMin(oCMin.getValue());
+			oZoneCSummary.setStationMin(oCMin.getStationName());
+			oZoneCSummary.setRefDateMin(oCMin.getReferenceDate());
+		}
+		else
+		{
+			oZoneCSummary.setMin(-9999.0);
+			oZoneCSummary.setStationMin("N.D.");
+			oZoneCSummary.setRefDateMin(null);				
+		}			
+
+		oSummaryInfo.getAlertInfo().add(oZoneCSummary);
+
+
+		AlertZoneSummaryInfo oZoneCPSummary = new AlertZoneSummaryInfo();
+		oZoneCPSummary.setDescription("C+");
+
+		SummaryInfoEntity oCPMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("C+", oActualDate);
+
+		if (oCPMax!=null)
+		{
+			oZoneCPSummary.setMax(oCPMax.getValue());
+			oZoneCPSummary.setStationMax(oCPMax.getStationName());
+			oZoneCPSummary.setRefDateMax(oCPMax.getReferenceDate());
+		}
+		else
+		{
+			oZoneCPSummary.setMax(-9999.0);
+			oZoneCPSummary.setStationMax("N.D.");
+			oZoneCPSummary.setRefDateMax(null);				
+		}
+
+		SummaryInfoEntity oCPMin = oStationDataRepository.getAlertZoneMinTemperatureSummaryInfo("C+", oActualDate);
+
+		if (oCPMin!=null)
+		{
+			oZoneCPSummary.setMin(oCPMin.getValue());
+			oZoneCPSummary.setStationMin(oCPMin.getStationName());
+			oZoneCPSummary.setRefDateMin(oCPMin.getReferenceDate());
+		}
+		else
+		{
+			oZoneCPSummary.setMin(-9999.0);
+			oZoneCPSummary.setStationMin("N.D.");
+			oZoneCPSummary.setRefDateMin(null);				
+		}			
+
+		oSummaryInfo.getAlertInfo().add(oZoneCPSummary);			
+
+
+		AlertZoneSummaryInfo oZoneCMSummary = new AlertZoneSummaryInfo();
+		oZoneCMSummary.setDescription("C-");
+
+		SummaryInfoEntity oCMMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("C-", oActualDate);
+
+=======
 		oSummaryInfo.getAlertInfo().add(oZoneASummary);
 
 		AlertZoneSummaryInfo oZoneBSummary = new AlertZoneSummaryInfo();
@@ -2569,6 +2979,7 @@ private void summaryTable() {
 
 		SummaryInfoEntity oCMMax = oStationDataRepository.getAlertZoneMaxTemperatureSummaryInfo("C-", oActualDate);
 
+>>>>>>> 486bc80... sync with old repository
 		if (oCMMax!=null)
 		{
 			oZoneCMSummary.setMax(oCMMax.getValue());

@@ -32,6 +32,7 @@ import com.vividsolutions.jts.geom.Point;
 
 
 
+
 public class GeoServerDataManager2 implements IGeoServerDataManager {
 
 	private  String m_GsUrl= null;
@@ -123,7 +124,11 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 					+ "<defaultStyle><name>" + styleId + "</name></defaultStyle>"
 					+ "<enabled>true</enabled>"
 					+ "</layer>";
+<<<<<<< HEAD
 			
+=======
+			System.out.println("Before Add L.");
+>>>>>>> 486bc80... sync with old repository
 			try {
 				geoserverAction("PUT", oUrlLayerStyle, m_GsUser, m_GsPsw, sInStyle);
 			}
@@ -389,6 +394,7 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 	{
 		try {
 			synchronized(m_oGeoServerCriticalSection) {
+<<<<<<< HEAD
 
 				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/" + sCoverageName+ "/coverages");
 
@@ -415,6 +421,34 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 			oEx.printStackTrace();
 		}
 
+=======
+
+				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/" + sCoverageName+ "/coverages");
+
+				String sResponse = geoserverGETAction(oUrlLayer, m_GsUser, m_GsPsw);
+
+				if (sResponse!=null)
+				{
+					if (!sResponse.isEmpty())
+					{
+						if (sResponse.contains("<name>"+sCoverageName+"</name>"))
+						{
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}			
+		}
+		catch (FileNotFoundException oEx) {
+			return false;
+		}
+		catch (Exception oEx) {
+			oEx.printStackTrace();
+		}
+
+>>>>>>> 486bc80... sync with old repository
 		return false;
 	}
 	public boolean ExistsCoverageStore(String sNameSpace, String sCoverageName) throws IOException
@@ -422,7 +456,11 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		try {
 			synchronized(m_oGeoServerCriticalSection) {
 
+<<<<<<< HEAD
 				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/"+sCoverageName	);
+=======
+				URL oUrlLayer = new URL(m_GsUrl + "rest/workspaces/"+ sNameSpace + "/coveragestores/");
+>>>>>>> 486bc80... sync with old repository
 
 				String sResponse = geoserverGETAction(oUrlLayer, m_GsUser, m_GsPsw);
 
@@ -446,6 +484,7 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		catch (Exception oEx) {
 			oEx.printStackTrace();
 		}
+<<<<<<< HEAD
 
 		return false;
 	}
@@ -492,6 +531,48 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 
 	  }
 
+=======
+
+		return false;
+	}
+	  private void geoserverAction(String sMethod, URL oUrlToSand, String sUser, String sPsw, String sInputAction) throws IOException
+	  {
+
+	    HttpURLConnection oGeoServerConn = (HttpURLConnection)oUrlToSand.openConnection();
+	    oGeoServerConn.setRequestMethod(sMethod);
+	    
+	    String usernameColonPassword =sUser+":"+sPsw;
+		String basicAuthPayload = "Basic " + Base64.getEncoder().encodeToString(usernameColonPassword.getBytes());
+	   
+	    oGeoServerConn.setRequestProperty("Authorization", "Basic " + basicAuthPayload);
+	    oGeoServerConn.setRequestProperty("Content-Type","text/xml");
+	    oGeoServerConn.setRequestProperty("Accept","text/xml");
+
+	    if(!sMethod.equals("DELETE")){
+
+	      oGeoServerConn.setDoOutput(true);
+	      OutputStream output = oGeoServerConn.getOutputStream();
+	      if(sInputAction != null) output.write(sInputAction.getBytes("UTF-8"));
+
+	    }
+
+	    oGeoServerConn.connect();
+	    byte abBuffer[] = new byte[8192];
+	    int read = 0;
+
+	    //risposta 
+	    InputStream responseBodyStream = oGeoServerConn.getInputStream();
+	    StringBuffer responseBody = new StringBuffer();
+	    while ((read = responseBodyStream.read(abBuffer)) != -1)
+	    {
+	      responseBody.append(new String(abBuffer, 0, read));
+	    }
+	    oGeoServerConn.disconnect();
+
+
+	  }
+
+>>>>>>> 486bc80... sync with old repository
 	/*private void geoserverAction(String sMethod, URL oUrlToSand, String sUser, String sPsw, String sInputAction) throws IOException
 	{
 		System.out.println("In geoserverAction");
@@ -562,9 +643,17 @@ public class GeoServerDataManager2 implements IGeoServerDataManager {
 		 httpResponseReader =
 		            new BufferedReader(new InputStreamReader(oGeoServerConn.getInputStream()));
 		    String lineRead;
+<<<<<<< HEAD
 		    while((lineRead = httpResponseReader.readLine()) != null) {
 		        responseBody.append(lineRead);
 		    }
+=======
+		    System.out.println("before recive");
+		    while((lineRead = httpResponseReader.readLine()) != null) {
+		        responseBody.append(lineRead);
+		    }
+		    System.out.println("after"); 
+>>>>>>> 486bc80... sync with old repository
 		oGeoServerConn.disconnect();
 
 		return responseBody.toString();
