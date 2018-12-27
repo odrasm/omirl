@@ -218,11 +218,7 @@ public class AuthService {
 			return oResult;
 		}
 		if (oSettings == null) {
-<<<<<<< remotes/tux/Daemon1.2
 			oResult.StringValue = "Si è verificato un errore si prega di riprovare";
-=======
-			oResult.StringValue = "Si � verificato un errore si prega di riprovare";
->>>>>>> sync with old repository
 			return oResult;
 		}
 		
