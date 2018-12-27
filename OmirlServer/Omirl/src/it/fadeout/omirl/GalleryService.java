@@ -50,7 +50,7 @@ public class GalleryService {
 			if (sRefDate.equals("") == false) 
 			{
 				// Try e catch per fare il parsing 
-				// se è valido sostituire oDate.
+				// se Ã¨ valido sostituire oDate.
 				SimpleDateFormat dtFormat = new SimpleDateFormat(Omirl.s_sDateHeaderFormat);
 				try {
 					
