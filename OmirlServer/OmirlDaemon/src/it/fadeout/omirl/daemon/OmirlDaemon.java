@@ -216,7 +216,6 @@ public class OmirlDaemon {
 					// Publish new Maps
 					System.out.println("OmirlDaemon - Publish Maps");
 					if (m_oConfig.isEnableMaps()) publishMaps();
-						try {
 
 					System.out.println("OmirlDaemon - Starting Charts Cycle");
 
@@ -2452,7 +2451,6 @@ private void summaryTable() {
 			oZoneASummary.setRefDateMin(null);				
 		}
 
-		oSummaryInfo.getAlertInfo().add(oZoneASummary);
 
 		oSummaryInfo.getAlertInfo().add(oZoneASummary);
 
@@ -5514,3 +5512,4 @@ private static void TestGeoTiff() {
 		e.printStackTrace();
 	}
 }	
+}
