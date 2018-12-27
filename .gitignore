@@ -1,3 +1,5 @@
 **/.gradle
 **/build
+**/hibernate.cfg.xml
+
 .idea
